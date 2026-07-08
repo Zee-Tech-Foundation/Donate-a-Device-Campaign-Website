@@ -44,3 +44,44 @@
       showSlide(next);
     }, 6000);
   }
+
+// Animated Impact Counters
+const counters = document.querySelectorAll(".num[data-target]");
+
+if (counters.length) {
+  const animateCounter = (counter) => {
+    const target = Number(counter.dataset.target);
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const value = Math.floor(progress * target);
+
+      counter.textContent = value.toLocaleString();
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        counter.textContent =
+          target.toLocaleString() + (target >= 1000 ? "+" : "");
+      }
+    }
+
+    requestAnimationFrame(update);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+}
