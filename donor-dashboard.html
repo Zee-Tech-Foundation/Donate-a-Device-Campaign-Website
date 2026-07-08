@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Donor Dashboard — Zee Tech Foundation</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div data-header></div>
+    <main>
+      <section
+        style="
+          background: #eef2f7;
+          padding: 2.5rem 0;
+          border-bottom: 1px solid var(--border);
+        "
+      >
+        <div class="container">
+          <p class="eyebrow" style="color: var(--accent)">Donor dashboard</p>
+          <h1>Welcome back, Ada</h1>
+          <p class="muted">Here's what your devices have been up to.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="container">
+          <div class="grid cols-3">
+            <div class="card stat">
+              <div class="num">12</div>
+              <div class="lbl">Total donations</div>
+            </div>
+            <div class="card stat">
+              <div class="num">9</div>
+              <div class="lbl">Devices delivered</div>
+            </div>
+            <div class="card stat">
+              <div class="num">3</div>
+              <div class="lbl">In refurbishment</div>
+            </div>
+          </div>
+          <div class="card mt-4" style="padding: 0; overflow: hidden">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1.25rem 1.5rem;
+              "
+            >
+              <h3 style="margin: 0">Your donations</h3>
+              <a class="btn btn-primary" href="donate.html">Donate another</a>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Device ID</th>
+                  <th>Type</th>
+                  <th>Donated</th>
+                  <th>Status</th>
+                  <th>Placed with</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>DEV-8A31</code></td>
+                  <td>Laptop</td>
+                  <td>2026-05-12</td>
+                  <td><span class="badge">Delivered</span></td>
+                  <td>Ola Centre</td>
+                  <td><a href="device-tracking.html">Track</a></td>
+                </tr>
+                <tr>
+                  <td><code>DEV-8B02</code></td>
+                  <td>Tablet</td>
+                  <td>2026-06-01</td>
+                  <td><span class="badge gray">Refurbishing</span></td>
+                  <td>—</td>
+                  <td><a href="device-tracking.html">Track</a></td>
+                </tr>
+                <tr>
+                  <td><code>DEV-8C77</code></td>
+                  <td>Smartphone</td>
+                  <td>2026-06-14</td>
+                  <td><span class="badge gray">QA</span></td>
+                  <td>—</td>
+                  <td><a href="device-tracking.html">Track</a></td>
+                </tr>
+                <tr>
+                  <td><code>DEV-7F19</code></td>
+                  <td>Laptop</td>
+                  <td>2026-04-02</td>
+                  <td><span class="badge">Delivered</span></td>
+                  <td>St. Mary's School</td>
+                  <td><a href="device-tracking.html">Track</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-footer></div>
+    <script src="main.js"></script>
+  </body>
+</html>

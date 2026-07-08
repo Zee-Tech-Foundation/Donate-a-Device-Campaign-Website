@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Device Tracking — Zee Tech Foundation</title>
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div data-header></div>
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Device tracking</p>
+          <h1>Follow a device from donation to delivery.</h1>
+          <p>Enter the device ID from your donation receipt.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="container" style="max-width: 720px">
+          <form
+            id="tf"
+            class="form"
+            style="grid-template-columns: 1fr auto; display: grid"
+            onsubmit="
+              event.preventDefault();
+              document.getElementById('did').textContent =
+                document.getElementById('idi').value || 'DEV-XXXX';
+            "
+          >
+            <input
+              id="idi"
+              placeholder="DEV-XXXX"
+              value="DEV-8A31"
+              style="
+                padding: 0.65rem 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+              "
+            />
+            <button class="btn btn-primary" type="submit">Track</button>
+          </form>
+
+          <div class="card mt-3">
+            <p
+              class="muted"
+              style="
+                margin: 0;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+              "
+            >
+              Device
+            </p>
+            <p
+              style="
+                margin: 0.25rem 0;
+                font-family: monospace;
+                font-size: 1.1rem;
+                font-weight: 600;
+              "
+              id="did"
+            >
+              DEV-8A31
+            </p>
+            <ol class="timeline mt-3">
+              <li>
+                <div class="dot">1</div>
+                <div class="body">
+                  <strong>Received</strong><small>2026-05-13</small>
+                </div>
+              </li>
+              <li>
+                <div class="dot">2</div>
+                <div class="body">
+                  <strong>Refurbished</strong><small>2026-05-20</small>
+                </div>
+              </li>
+              <li>
+                <div class="dot">3</div>
+                <div class="body">
+                  <strong>Quality assured</strong><small>2026-05-22</small>
+                </div>
+              </li>
+              <li>
+                <div class="dot">4</div>
+                <div class="body">
+                  <strong>Delivered to Zee Tech Foundation</strong
+                  ><small>2026-05-28</small>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-footer></div>
+    <script src="main.js"></script>
+  </body>
+</html>

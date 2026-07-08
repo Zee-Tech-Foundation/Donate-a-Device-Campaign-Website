@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Apply for a Device — Zee Tech Foundation</title>
+    <meta
+      name="description"
+      content="Students, educators and community programmes can apply here for a refurbished device."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div data-header></div>
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <p class="eyebrow">Apply</p>
+          <h1>Request a refurbished device.</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="container" style="max-width: 720px">
+          <div class="card">
+            <form
+              class="form"
+              data-demo="Application submitted. You'll receive an update within 2 weeks."
+            >
+              <div class="row-2">
+                <div class="field">
+                  <label>Full name</label><input required />
+                </div>
+                <div class="field">
+                  <label>Age</label><input type="number" min="6" required />
+                </div>
+              </div>
+              <div class="row-2">
+                <div class="field">
+                  <label>Email</label><input type="email" required />
+                </div>
+                <div class="field"><label>Phone</label><input required /></div>
+              </div>
+              <div class="field">
+                <label>I am a…</label>
+                <select required>
+                  <option value="">Select</option>
+                  <option>Student</option>
+                  <option>Educator</option>
+                  <option>Community programme</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>School or organisation</label><input />
+              </div>
+              <div class="field">
+                <label>Why do you need a device?</label
+                ><textarea rows="5" required></textarea>
+              </div>
+              <div class="field">
+                <label>Location</label
+                ><input required placeholder="City, country" />
+              </div>
+              <button class="btn btn-primary" type="submit">
+                Submit application
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-footer></div>
+    <script src="main.js"></script>
+  </body>
+</html>
