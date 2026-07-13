@@ -23,13 +23,40 @@
   </head>
 
   <body>
-    <div data-header></div>
+    <header class="site-header">
+      <div class="container">
+        <nav class="nav">
+          <a href="index.html" class="brand">
+            <img
+              src="images/logo.png"
+              alt="Zee Tech Foundation Logo"
+              class="brand-logo"
+            />
+          </a>
+
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="campaign.html">Campaign</a>
+            <a href="donate.html" class="active">Donate</a>
+            <a href="apply.html">Apply</a>
+            <a href="partner.html">Partner</a>
+            <a href="impact.html">Impact</a>
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <div class="nav-cta">
+            <a href="donate.html" class="btn btn-dark"> Donate </a>
+          </div>
+
+          <button class="menu-btn">☰</button>
+        </nav>
+      </div>
+    </header>
 
     <main>
-      <!-- =========================
-           HERO SECTION
-      ========================== -->
-
+    
+    
       <section class="hero hero-slider" data-hero-slider>
         <button class="slider-arrow prev" aria-label="Previous Slide">
           &#8249;
@@ -40,10 +67,7 @@
         </button>
 
         <div class="slides">
-          <!-- =========================
-               HERO SLIDE ONE
-          ========================== -->
-
+         
           <div class="hero-slide active">
             <div class="container hero-inner">
               <div class="hero-grid">
@@ -99,11 +123,7 @@
             </div>
           </div>
 
-          <!-- =========================
-               HERO SLIDE TWO
-               VIDEO ONLY
-          ========================== -->
-
+          
           <div class="hero-slide">
             <div class="hero-video">
               <video controls playsinline poster="images/story.jpg">
@@ -117,9 +137,6 @@
 
         <div class="slider-dots" role="tablist"></div>
       </section>
-      <!-- ==========================================
-           WELCOME TO THE CAMPAIGN
-      =========================================== -->
 
       <section class="block">
         <div class="container">
@@ -144,7 +161,7 @@
               </p>
 
               <p>
-                The <strong>Donate a Device - Change a Future</strong> campaign
+                The <strong>Donate a Device – Change a Future</strong> campaign
                 connects these two realities by collecting, refurbishing, and
                 redistributing technology to learners, educators, innovators,
                 and communities where it can create lasting educational,
@@ -167,11 +184,7 @@
         </div>
       </section>
 
-      <!-- ==========================================
-           IMPACT STATISTICS
-      =========================================== -->
-
-      <section class="block alt">
+          <section class="block alt">
         <div class="container">
           <div class="section-head center reveal">
             <p class="eyebrow">Our Impact</p>
@@ -188,7 +201,7 @@
             <div class="card stat reveal">
               <div class="num">2,400+</div>
 
-              <div class="lbl">Devices Delivered</div>
+              <div class="lbl">Devices Donated
             </div>
 
             <div class="card stat reveal delay-1">
@@ -211,9 +224,6 @@
           </div>
         </div>
       </section>
-      <!-- ==========================================
-           VISION & MISSION
-      =========================================== -->
 
       <section class="block">
         <div class="container">
@@ -229,7 +239,9 @@
           </div>
 
           <div class="grid cols-2">
+           
             <div class="card reveal">
+
               <h3>Our Vision</h3>
 
               <p>
@@ -264,7 +276,7 @@
           </div>
         </div>
       </section>
-
+     
       <section class="block alt">
         <div class="container">
           <div class="section-head center reveal">
@@ -304,10 +316,6 @@
           </div>
         </div>
       </section>
-
-      <!-- ==========================================
-           HOW THE CAMPAIGN WORKS
-      =========================================== -->
 
       <section class="block">
         <div class="container">
@@ -397,10 +405,6 @@
         </div>
       </section>
 
-      <!-- ==========================================
-           WHO BENEFITS
-      =========================================== -->
-
       <section class="block alt">
         <div class="container">
           <div class="section-head center reveal">
@@ -416,6 +420,7 @@
 
           <div class="grid cols-3">
             <div class="card reveal">
+
               <h3>Teachers & Educators</h3>
 
               <p>
@@ -425,6 +430,7 @@
             </div>
 
             <div class="card reveal delay-1">
+
               <h3>Students & Youth</h3>
 
               <p>
@@ -443,6 +449,7 @@
             </div>
 
             <div class="card reveal">
+
               <h3>Persons with Disabilities</h3>
 
               <p>
@@ -452,6 +459,7 @@
             </div>
 
             <div class="card reveal delay-1">
+
               <h3>Schools & Learning Centres</h3>
 
               <p>
@@ -472,13 +480,10 @@
           </div>
         </div>
       </section>
-      <!-- ==========================================
-           WHY DONATE YOUR DEVICE
-      =========================================== -->
-
+     
       <section class="block">
         <div class="container">
-          <div class="grid cols-2" style="align-items: center; gap: 4rem">
+          <div class="grid cols-2" style="align-items: center; gap: 3rem">
             <div class="reveal">
               <img
                 src="images/donate-device.jpg"
@@ -514,61 +519,31 @@
         </div>
       </section>
 
-      <!-- ==========================================
-           TRANSPARENCY
-      =========================================== -->
-
       <section class="block alt">
         <div class="container">
-          <div class="grid cols-2" style="align-items: center; gap: 3rem">
-            <!-- Text -->
+          <div class="section-head center reveal">
+            <p class="eyebrow">Accountability</p>
 
-            <div class="reveal">
-              <p class="eyebrow">Accountability</p>
+            <h2>Our Commitment to Transparency</h2>
 
-              <h2>Our Commitment to Transparency</h2>
+            <p class="muted">Trust is at the heart of everything we do.</p>
+          </div>
 
-              <p>
-                Trust is at the heart of everything we do. Every donated device
-                is documented, assessed, securely wiped, refurbished where
-                possible, and distributed through a transparent beneficiary
-                selection process.
-              </p>
+          <div class="card reveal">
+            <p>
+              Every donated device is documented, assessed, securely wiped,
+              refurbished where possible, and distributed through a transparent
+              beneficiary selection process.
+            </p>
 
-              <p>
-                We maintain detailed distribution records, monitor outcomes, and
-                share impact stories and campaign updates so our donors,
-                partners, and supporters can clearly see how every contribution
-                is creating lasting change.
-              </p>
-
-              <p>
-                Our commitment is simple: every donation is managed responsibly,
-                ethically, and with the greatest possible benefit for the
-                communities we serve.
-              </p>
-
-              <a href="impact.html" class="btn btn-dark mt-3">
-                View Our Impact
-              </a>
-            </div>
-
-            <!-- Image -->
-
-            <div class="reveal delay-1">
-              <img
-                src="images/transparency.jpg"
-                alt="Zee Tech Foundation documenting donated devices"
-                class="section-image"
-              />
-            </div>
+            <p>
+              We monitor every distribution, measure outcomes, and share impact
+              stories so donors and partners can see how their support is
+              changing lives across communities.
+            </p>
           </div>
         </div>
       </section>
-
-      <!-- ==========================================
-           JOIN THE MOVEMENT
-      =========================================== -->
 
       <section class="block">
         <div class="container">
@@ -624,10 +599,6 @@
         </div>
       </section>
 
-      <!-- ==========================================
-           FINAL CALL TO ACTION
-      =========================================== -->
-
       <section class="block">
         <div class="container">
           <div class="cta-banner reveal">
@@ -660,13 +631,9 @@
         </div>
       </section>
 
-      <!-- ==========================================
-           PARTNERS
-      =========================================== -->
-
       <section class="partners reveal">
         <div class="container">
-          <h2>Trusted by Partners Across the World</h2>
+          <h2>Trusted by Partners Across Nigeria</h2>
         </div>
 
         <div class="partners-track-wrap">
@@ -693,7 +660,67 @@
       </section>
     </main>
 
-    <div data-footer></div>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+         
+          <div class="footer-brand">
+            <a href="index.html" class="brand">
+              <img
+                src="images/logo.png"
+                alt="Zee Tech Foundation Logo"
+                class="brand-logo"
+              />
+            </a>
+
+            <p>
+              Bridging the digital divide by putting refurbished technology into
+              the hands of every learner, educator and community.
+            </p>
+          </div>
+
+
+          <div>
+            <h4>Explore</h4>
+
+            <a href="about.html">About Us</a><br />
+            <a href="campaign.html">Campaign</a><br />
+            <a href="impact.html">Impact</a><br />
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <div>
+            <h4>Get Involved</h4>
+
+            <a href="donate.html">Donate</a><br />
+            <a href="apply.html">Apply</a><br />
+            <a href="partner.html">Partner</a><br />
+          </div>
+
+          <div>
+            <h4>Accounts</h4>
+
+            <a href="login.html">Login</a><br />
+            <a href="register.html">Register</a><br />
+            <a href="privacy.html">Privacy Policy</a><br />
+            <a href="terms.html">Terms & Conditions</a>
+          </div>
+
+
+          <div>
+            <h4>Contact</h4>
+
+            <p>info@zeetechfoundation.org</p>
+            <p>Isa Yuguda House, Plot 19/23, Jos Road Bauchi, Bauchi State</p>
+            <p>+234 810 326 9627</p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Zee Tech Foundation. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
 
     <script src="main.js"></script>
   </body>

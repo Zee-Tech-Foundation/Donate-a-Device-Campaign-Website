@@ -14,56 +14,325 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div data-header></div>
+    <header class="site-header">
+      <div class="container">
+        <nav class="nav">
+          <a href="index.html" class="brand">
+            <img
+              src="images/logo.png"
+              alt="Zee Tech Foundation Logo"
+              class="brand-logo"
+            />
+          </a>
+
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="campaign.html">Campaign</a>
+            <a href="donate.html" class="active">Donate</a>
+            <a href="apply.html">Apply</a>
+            <a href="partner.html">Partner</a>
+            <a href="impact.html">Impact</a>
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <div class="nav-cta">
+            <a href="donate.html" class="btn btn-dark"> Donate </a>
+          </div>
+
+          <button class="menu-btn">☰</button>
+        </nav>
+      </div>
+    </header>
     <main>
       <section class="page-hero">
         <div class="container">
-          <p class="eyebrow">Contact</p>
-          <h1>We'd love to hear from you.</h1>
-          <p>Whether you're donating, applying or partnering — get in touch.</p>
+          <p class="eyebrow">Contact Us</p>
+          <h1>Let's Create Change Together.</h1>
+          <p>
+            Whether you want to donate a device, apply for support, partner with
+            us, volunteer, or ask a question, we'd love to hear from you.
+          </p>
         </div>
       </section>
 
       <section class="block">
         <div class="container">
-          <div class="grid cols-2">
-            <div class="card">
-              <h3>Direct</h3>
-              <p><strong>Email</strong><br />hello@zeetech.org</p>
-              <p><strong>Phone</strong><br />+000 000 0000</p>
+          <div class="section-head center">
+            <p class="eyebrow">Get in Touch</p>
+            <h2>We're here to help.</h2>
+            <p>Reach out to our team and we'll respond as soon as possible.</p>
+          </div>
+
+          <div class="grid cols-3">
+            <div class="card reveal">
+              <div class="icon">✉</div>
+              <h3>Email</h3>
+              <p>info@zeetechfoundation.org</p>
+            </div>
+
+            <div class="card reveal delay-1">
+              <div class="icon">📞</div>
+              <h3>Phone</h3>
+              <p>+234 810 326 9627</p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <div class="icon">📍</div>
+              <h3>Office</h3>
               <p>
-                <strong>Address</strong><br />123 Innovation Way<br />City,
-                Country
-              </p>
-              <p>
-                <strong>Follow</strong><br /><a href="#">Twitter</a> ·
-                <a href="#">Instagram</a> · <a href="#">LinkedIn</a>
+                Isa Yuguda House, Plot 19/23, Jos Road Bauchi, Bauchi State
+                <br />
+                Visits by appointment only.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block alt">
+        <div class="container">
+          <div class="section-head center">
+            <p class="eyebrow">We Can Help</p>
+            <h2>How can we assist you?</h2>
+          </div>
+
+          <div class="grid cols-3">
+            <div class="card reveal">
+              <h3>Donate</h3>
+              <p>Questions about donating devices or arranging collections.</p>
+            </div>
+
+            <div class="card reveal delay-1">
+              <h3>Apply</h3>
+              <p>Support with eligibility or your device application.</p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <h3>Partner</h3>
+              <p>Corporate partnerships, sponsorships and collaborations.</p>
+            </div>
+
+            <div class="card reveal">
+              <h3>Volunteer</h3>
+              <p>Join our network and help expand digital access.</p>
+            </div>
+
+            <div class="card reveal delay-1">
+              <h3>Media</h3>
+              <p>Press enquiries, interviews and campaign updates.</p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <h3>General Enquiries</h3>
+              <p>Questions about Zee Tech Foundation and our programmes.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="form-bg form-bg-partner">
+        <div class="container" style="max-width: 760px">
+          <div class="form-intro reveal">
+            <p class="eyebrow">Contact Form</p>
+            <h2 style="color: #fff">Send Us a Message</h2>
+            <p>Complete the form below and our team will get back to you.</p>
+          </div>
+
+          <div class="card reveal">
+            <form
+              class="form"
+              data-demo="Message sent successfully. We'll be in touch soon."
+            >
+              <div class="row-2">
+                <div class="field">
+                  <label>Full Name</label>
+                  <input type="text" required />
+                </div>
+
+                <div class="field">
+                  <label>Organisation (Optional)</label>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="row-2">
+                <div class="field">
+                  <label>Email Address</label>
+                  <input type="email" required />
+                </div>
+
+                <div class="field">
+                  <label>Phone Number</label>
+                  <input type="tel" />
+                </div>
+              </div>
+
+              <div class="row-2">
+                <div class="field">
+                  <label>Country</label>
+                  <input type="text" required />
+                </div>
+
+                <div class="field">
+                  <label>Subject</label>
+                  <select required>
+                    <option value="">Select a subject</option>
+                    <option>Device Donation</option>
+                    <option>Apply for a Device</option>
+                    <option>Partnership</option>
+                    <option>Volunteer</option>
+                    <option>Media</option>
+                    <option>General Enquiry</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Preferred Contact Method</label>
+
+                <div style="display: flex; gap: 2rem; margin-top: 0.5rem">
+                  <label>
+                    <input type="radio" name="contact" checked />
+                    Email
+                  </label>
+
+                  <label>
+                    <input type="radio" name="contact" />
+                    Phone
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Message</label>
+                <textarea
+                  rows="6"
+                  placeholder="Tell us how we can help..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="field field-check">
+                <input type="checkbox" id="terms" required />
+
+                <label for="terms">
+                  I agree to the
+                  <a href="terms.html" target="_blank">Terms &amp; Conditions</a
+                  >.
+                </label>
+              </div>
+
+              <button class="btn btn-primary" type="submit">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <section class="block alt">
+        <div class="container">
+          <div class="section-head center">
+            <p class="eyebrow">FAQ</p>
+            <h2>Frequently Asked Questions</h2>
+          </div>
+
+          <div class="grid cols-2">
             <div class="card">
-              <form class="form" data-demo="Message sent — we'll reply soon.">
-                <div class="field">
-                  <label>Your name</label><input required />
-                </div>
-                <div class="field">
-                  <label>Email</label><input type="email" required />
-                </div>
-                <div class="field">
-                  <label>Subject</label><input required />
-                </div>
-                <div class="field">
-                  <label>Message</label><textarea rows="5" required></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit">
-                  Send message
-                </button>
-              </form>
+              <h3>Can I donate one laptop?</h3>
+              <p>Yes. Every donated device helps create new opportunities.</p>
+            </div>
+
+            <div class="card">
+              <h3>Do you accept corporate donations?</h3>
+              <p>
+                Yes. We work with businesses, schools and organisations of all
+                sizes.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Can I volunteer without technical skills?</h3>
+              <p>
+                Absolutely. We welcome volunteers with a wide range of skills.
+              </p>
+            </div>
+
+            <div class="card">
+              <h3>Do you operate outside Bauchi?</h3>
+              <p>
+                Yes. We are expanding our programmes across Nigeria through
+                partnerships.
+              </p>
             </div>
           </div>
         </div>
       </section>
     </main>
-    <div data-footer></div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Logo & About -->
+          <div class="footer-brand">
+            <a href="index.html" class="brand">
+              <img
+                src="images/logo.png"
+                alt="Zee Tech Foundation Logo"
+                class="brand-logo"
+              />
+            </a>
+
+            <p>
+              Bridging the digital divide by putting refurbished technology into
+              the hands of every learner, educator and community.
+            </p>
+          </div>
+
+          <!-- Explore -->
+          <div>
+            <h4>Explore</h4>
+
+            <a href="about.html">About Us</a><br />
+            <a href="campaign.html">Campaign</a><br />
+            <a href="impact.html">Impact</a><br />
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <!-- Get Involved -->
+          <div>
+            <h4>Get Involved</h4>
+
+            <a href="donate.html">Donate</a><br />
+            <a href="apply.html">Apply</a><br />
+            <a href="partner.html">Partner</a><br />
+          </div>
+
+          <!-- Accounts -->
+          <div>
+            <h4>Accounts</h4>
+
+            <a href="login.html">Login</a><br />
+            <a href="register.html">Register</a><br />
+            <a href="privacy.html">Privacy Policy</a><br />
+            <a href="terms.html">Terms & Conditions</a>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h4>Contact</h4>
+
+            <p>info@zeetechfoundation.org</p>
+            <p>Isa Yuguda House, Plot 19/23, Jos Road Bauchi, Bauchi State</p>
+            <p>+234 810 326 9627</p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Zee Tech Foundation. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
     <script src="main.js"></script>
   </body>
 </html>

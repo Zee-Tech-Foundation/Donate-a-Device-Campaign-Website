@@ -17,93 +17,241 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div data-header></div>
-    <main>
-      <section class="page-hero">
-        <div class="container">
-          <p class="eyebrow">Impact</p>
-          <h1>What happens when a learner gets a device.</h1>
-          <p>The numbers matter — but the stories matter more.</p>
-        </div>
-      </section>
+    <header class="site-header">
+      <div class="container">
+        <nav class="nav">
+         <a href="index.html" class="brand">
+  <img
+    src="images/logo.png"
+    alt="Zee Tech Foundation Logo"
+    class="brand-logo"
+  />
+</a>
 
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="campaign.html">Campaign</a>
+            <a href="donate.html" class="active">Donate</a>
+            <a href="apply.html">Apply</a>
+            <a href="partner.html">Partner</a>
+            <a href="impact.html">Impact</a>
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <div class="nav-cta">
+            <a href="donate.html" class="btn btn-dark"> Donate </a>
+          </div>
+
+          <button class="menu-btn">☰</button>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <!-- Intro -->
       <section class="block">
         <div class="container">
-          <div class="grid cols-4">
-            <div class="card stat">
-              <div class="num">2,400+</div>
-              <div class="lbl">Devices delivered</div>
-            </div>
-            <div class="card stat">
-              <div class="num">1,850</div>
-              <div class="lbl">Beneficiaries reached</div>
-            </div>
-            <div class="card stat">
-              <div class="num">60</div>
-              <div class="lbl">Partner organisations</div>
-            </div>
-            <div class="card stat">
-              <div class="num">18</div>
-              <div class="lbl">Communities served</div>
-            </div>
+          <div class="section-head center reveal">
+            <p class="eyebrow">Our Impact</p>
+            <h1>Every Device Creates New Opportunities</h1>
+            <p>
+              Behind every donated device is a learner, teacher or community
+              gaining access to education, skills and opportunity.
+            </p>
           </div>
         </div>
       </section>
 
+      <!-- Statistics -->
       <section class="block alt">
         <div class="container">
-          <div class="section-head">
-            <p class="eyebrow">Stories</p>
-            <h2>Voices from the programme.</h2>
+          <div class="grid cols-4">
+    <div class="card stat reveal">
+        <div class="num" data-target="2400">0</div>
+        <div class="lbl">Devices Donated</div>
+    </div>
+
+    <div class="card stat reveal delay-1">
+        <div class="num" data-target="1850">0</div>
+        <div class="lbl">Beneficiaries Reached</div>
+    </div>
+
+    <div class="card stat reveal delay-2">
+        <div class="num" data-target="60">0</div>
+        <div class="lbl">Partner Organisations</div>
+    </div>
+
+    <div class="card stat reveal delay-3">
+        <div class="num" data-target="18">0</div>
+        <div class="lbl">Communities Served</div>
+    </div>
+</div>
+      </section>
+
+      <!-- How we measure -->
+      <section class="block">
+        <div class="container">
+          <div class="section-head center reveal">
+            <h2>How We Measure Impact</h2>
+            <p>
+              We track every stage of the campaign to ensure donations create
+              meaningful and lasting change.
+            </p>
           </div>
+
           <div class="grid cols-3">
-            <div class="card">
+            <div class="card reveal">
+              <h3>Track</h3>
               <p>
-                "My laptop changed everything. I now mentor five other girls in
-                coding."
+                Every donated device is recorded, refurbished and monitored.
               </p>
-              <p class="muted">— Ada, 16, student</p>
             </div>
-            <div class="card">
-              <p>"Our classroom has real tools now. Attendance is up 30%."</p>
-              <p class="muted">— Mr. Bello, teacher</p>
-            </div>
-            <div class="card">
+
+            <div class="card reveal delay-1">
+              <h3>Measure</h3>
               <p>
-                "The refurbished tablets let us run a full literacy programme."
+                We monitor beneficiaries, schools reached and community
+                outcomes.
               </p>
-              <p class="muted">— Ola Centre, NGO partner</p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <h3>Share</h3>
+              <p>We publish updates, impact stories and campaign results.</p>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Stories -->
+      <section class="block alt">
+        <div class="container">
+          <div class="section-head center reveal">
+            <h2>Stories Behind the Numbers</h2>
+          </div>
+
+          <div class="grid cols-3">
+            <div class="card reveal">
+              <h3>Teachers</h3>
+              <p>
+                Teachers gain modern tools to prepare lessons and improve
+                classroom learning.
+              </p>
+            </div>
+
+            <div class="card reveal delay-1">
+              <h3>Students</h3>
+              <p>
+                Learners access online resources, complete assignments and build
+                digital skills.
+              </p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <h3>Communities</h3>
+              <p>
+                Schools and community centres expand access to technology and
+                digital opportunities.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Image + Future -->
       <section class="block">
         <div class="container">
-          <div class="grid cols-2" style="align-items: center">
-            <div>
-              <img
-                src="images/handover.jpg"
-                alt="Device handover ceremony"
-                style="border-radius: var(--radius)"
-              />
-            </div>
-            <div>
-              <h2>Every device is measured.</h2>
+          <div class="grid cols-2" style="align-items: center; gap: 3rem">
+            <img
+              src="images/handover.jpg"
+              alt="Device handover"
+              class="section-image reveal"
+            />
+
+            <div class="reveal delay-1">
+              <h2>Looking Ahead</h2>
+
               <p>
-                We track deliveries, usage and educational outcomes so that
-                every donor and partner can see the real impact of their
-                contribution.
+                Our goal is to reach more schools, strengthen partnerships and
+                give thousands more learners access to technology across
+                Nigeria.
               </p>
-              <a class="btn btn-dark" href="contact.html"
-                >Request the impact report</a
-              >
             </div>
           </div>
         </div>
       </section>
     </main>
-    <div data-footer></div>
+    <footer class="site-footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <!-- Logo & About -->
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <img
+            src="images/logo.png"
+            alt="Zee Tech Foundation Logo"
+            class="brand-logo"
+          />
+        </a>
+
+        <p>
+          Bridging the digital divide by putting refurbished technology into the
+          hands of every learner, educator and community.
+        </p>
+      </div>
+
+      <!-- Explore -->
+      <div>
+        <h4>Explore</h4>
+
+        <a href="about.html">About Us</a><br />
+        <a href="campaign.html">Campaign</a><br />
+        <a href="impact.html">Impact</a><br />
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <!-- Get Involved -->
+      <div>
+        <h4>Get Involved</h4>
+
+        <a href="donate.html">Donate</a><br />
+        <a href="apply.html">Apply</a><br />
+        <a href="partner.html">Partner</a><br />
+      </div>
+
+      <!-- Accounts -->
+      <div>
+        <h4>Accounts</h4>
+
+        <a href="login.html">Login</a><br />
+        <a href="register.html">Register</a><br />
+        <a href="privacy.html">Privacy Policy</a><br />
+        <a href="terms.html">Terms & Conditions</a>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4>Contact</h4>
+
+        <p>info@zeetechfoundation.org</p>
+        <p>Isa Yuguda House, Plot 19/23, Jos Road Bauchi, Bauchi State</p>
+        <p>+234 810 326 9627</p>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>
+        © 2026 Zee Tech Foundation. All Rights Reserved.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
     <script src="main.js"></script>
   </body>
 </html>

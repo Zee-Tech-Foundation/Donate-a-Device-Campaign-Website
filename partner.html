@@ -17,104 +17,309 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div data-header></div>
+    <header class="site-header">
+      <div class="container">
+        <nav class="nav">
+          <a href="index.html" class="brand">
+            <img
+              src="images/logo.png"
+              alt="Zee Tech Foundation Logo"
+              class="brand-logo"
+            />
+          </a>
+
+          <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="campaign.html">Campaign</a>
+            <a href="donate.html" class="active">Donate</a>
+            <a href="apply.html">Apply</a>
+            <a href="partner.html">Partner</a>
+            <a href="impact.html">Impact</a>
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <div class="nav-cta">
+            <a href="donate.html" class="btn btn-dark"> Donate </a>
+          </div>
+
+          <button class="menu-btn">☰</button>
+        </nav>
+      </div>
+    </header>
     <main>
-      <section class="page-hero">
+      <section class="block">
         <div class="container">
-          <p class="eyebrow">Partner</p>
-          <h1>Scale digital inclusion with us.</h1>
-          <p>
-            We work with companies, schools and NGOs to source devices, sponsor
-            refurbishment, and reach more learners.
-          </p>
+          <div class="section-head center reveal">
+            <p class="eyebrow">Partner With Us</p>
+            <h1>Together, We Can Bridge the Digital Divide</h1>
+            <p>
+              Partner with Zee Tech Foundation to expand digital access, reduce
+              e-waste and create opportunities through technology.
+            </p>
+          </div>
+
+          <div class="grid cols-3">
+            <div class="card reveal">
+              <h3>Why Partner?</h3>
+              <p>
+                Help deliver technology to schools, learners and communities
+                while supporting education and sustainability.
+              </p>
+            </div>
+
+            <div class="card reveal delay-1">
+              <h3>Your Impact</h3>
+              <p>
+                Support digital inclusion, STEM education, teacher development,
+                youth empowerment and responsible e-waste management.
+              </p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <h3>Why Work With Us?</h3>
+              <p>
+                We deliver transparent programmes, measurable results and
+                lasting community impact across Nigeria.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="block alt">
+        <div class="container">
+          <div class="section-head center reveal">
+            <h2>Ways to Partner</h2>
+          </div>
+
+          <div class="grid cols-4">
+            <div class="card reveal">
+              <h3>Device Donation</h3>
+              <p>Donate surplus laptops, desktops, tablets and accessories.</p>
+            </div>
+
+            <div class="card reveal delay-1">
+              <h3>Financial Support</h3>
+              <p>Fund refurbishment, logistics, software and training.</p>
+            </div>
+
+            <div class="card reveal delay-2">
+              <h3>Technical Support</h3>
+              <p>
+                Provide repair services, software, cloud or cybersecurity
+                expertise.
+              </p>
+            </div>
+
+            <div class="card reveal delay-3">
+              <h3>Education & Community</h3>
+              <p>
+                Collaborate through schools, NGOs, government or volunteer
+                programmes.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="block">
         <div class="container">
-          <div class="grid cols-3">
+          <div class="section-head center reveal">
+            <h2>Who Can Partner?</h2>
+          </div>
+
+          <div class="grid cols-4">
             <div class="card reveal">
-              <h3>Corporate device drives</h3>
-              <p>
-                Retire and donate old fleets responsibly with certified data
-                wiping.
-              </p>
+              <h3>Businesses</h3>
+              <p>Companies, SMEs and technology firms.</p>
             </div>
+
             <div class="card reveal delay-1">
-              <h3>Refurbishment sponsorship</h3>
-              <p>Fund a batch of devices from acquisition to delivery.</p>
+              <h3>Education</h3>
+              <p>Schools, universities and learning centres.</p>
             </div>
+
             <div class="card reveal delay-2">
-              <h3>Community deployment</h3>
+              <h3>Public Sector</h3>
+              <p>Government agencies and development organisations.</p>
+            </div>
+
+            <div class="card reveal delay-3">
+              <h3>Community</h3>
               <p>
-                Partner as a school, NGO or hub to receive and place devices.
+                NGOs, foundations, associations and individual philanthropists.
               </p>
             </div>
           </div>
         </div>
       </section>
-
       <section class="form-bg form-bg-partner">
-        <div class="container" style="max-width: 720px">
+        <div class="container" style="max-width: 760px">
           <div class="form-intro reveal">
-            <h2 style="color: #fff">Start a conversation</h2>
+            <p class="eyebrow">Partner Enquiry</p>
+            <h2 style="color: #fff">Let's Build the Future Together</h2>
             <p>
-              Tell us about your organisation and how you'd like to partner.
+              Tell us about your organisation and how you'd like to support the
+              campaign.
             </p>
           </div>
+
           <div class="card reveal">
             <form
               class="form"
-              data-demo="Thanks — a partnerships lead will reach out within 3 business days."
+              data-demo="Thank you! Our partnerships team will contact you soon."
             >
               <div class="row-2">
                 <div class="field">
-                  <label>Organisation name</label><input required />
+                  <label>Organisation Name</label>
+                  <input type="text" required />
                 </div>
+
                 <div class="field">
-                  <label>Website</label><input placeholder="https://" />
+                  <label>Organisation Type</label>
+                  <select required>
+                    <option value="">Select</option>
+                    <option>Business</option>
+                    <option>NGO</option>
+                    <option>School</option>
+                    <option>Government</option>
+                    <option>Foundation</option>
+                    <option>Other</option>
+                  </select>
                 </div>
               </div>
+
               <div class="row-2">
                 <div class="field">
-                  <label>Contact name</label><input required />
+                  <label>Contact Name</label>
+                  <input type="text" required />
                 </div>
+
                 <div class="field">
-                  <label>Contact email</label><input type="email" required />
+                  <label>Email Address</label>
+                  <input type="email" required />
                 </div>
               </div>
+
+              <div class="row-2">
+                <div class="field">
+                  <label>Phone Number</label>
+                  <input type="tel" required />
+                </div>
+
+                <div class="field">
+                  <label>Website (Optional)</label>
+                  <input type="url" placeholder="https://example.com" />
+                </div>
+              </div>
+
               <div class="field">
-                <label>Partnership type</label>
+                <label>Partnership Interest</label>
                 <select required>
-                  <option value="">Select</option>
-                  <option>Corporate device drive</option>
-                  <option>Refurbishment sponsorship</option>
-                  <option>Community deployment</option>
+                  <option value="">Select an option</option>
+                  <option>Device Donation</option>
+                  <option>Financial Sponsorship</option>
+                  <option>Technical Support</option>
+                  <option>Education Partnership</option>
+                  <option>Government Partnership</option>
+                  <option>Volunteer Programme</option>
                   <option>Other</option>
                 </select>
               </div>
+
               <div class="field">
-                <label>Tell us more</label><textarea rows="5"></textarea>
+                <label>How would you like to support us?</label>
+                <textarea
+                  rows="5"
+                  placeholder="Tell us about your organisation and partnership idea."
+                  required
+                ></textarea>
               </div>
+
               <div class="field field-check">
-                <input type="checkbox" id="terms" name="terms" required />
-                <label for="terms"
-                  >I agree to the
-                  <a href="terms.html" target="_blank"
-                    >Terms &amp; Conditions</a
-                  >
-                  and am authorised to represent this organisation.</label
-                >
+                <input type="checkbox" id="partner-terms" required />
+
+                <label for="partner-terms">
+                  I confirm I am authorised to represent this organisation and
+                  agree to the
+                  <a href="terms.html" target="_blank">Terms &amp; Conditions</a
+                  >.
+                </label>
               </div>
+
               <button class="btn btn-primary" type="submit">
-                Send enquiry
+                Submit Enquiry
               </button>
             </form>
           </div>
         </div>
       </section>
     </main>
-    <div data-footer></div>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Logo & About -->
+          <div class="footer-brand">
+            <a href="index.html" class="brand">
+              <img
+                src="images/logo.png"
+                alt="Zee Tech Foundation Logo"
+                class="brand-logo"
+              />
+            </a>
+
+            <p>
+              Bridging the digital divide by putting refurbished technology into
+              the hands of every learner, educator and community.
+            </p>
+          </div>
+
+          <!-- Explore -->
+          <div>
+            <h4>Explore</h4>
+
+            <a href="about.html">About Us</a><br />
+            <a href="campaign.html">Campaign</a><br />
+            <a href="impact.html">Impact</a><br />
+            <a href="contact.html">Contact</a>
+          </div>
+
+          <!-- Get Involved -->
+          <div>
+            <h4>Get Involved</h4>
+
+            <a href="donate.html">Donate</a><br />
+            <a href="apply.html">Apply</a><br />
+            <a href="partner.html">Partner</a><br />
+          </div>
+
+          <!-- Accounts -->
+          <div>
+            <h4>Accounts</h4>
+
+            <a href="login.html">Login</a><br />
+            <a href="register.html">Register</a><br />
+            <a href="privacy.html">Privacy Policy</a><br />
+            <a href="terms.html">Terms & Conditions</a>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h4>Contact</h4>
+
+            <p>info@zeetechfoundation.org</p>
+            <p>Isa Yuguda House, Plot 19/23, Jos Road Bauchi, Bauchi State</p>
+            <p>+234 810 326 9627</p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Zee Tech Foundation. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
     <script src="main.js"></script>
   </body>
 </html>

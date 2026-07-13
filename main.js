@@ -145,3 +145,50 @@
 
   window.ztfToast = toast;
 })();
+/* ==========================
+   Animated Impact Counter
+========================== */
+
+const counters = document.querySelectorAll(".num[data-target]");
+
+if (counters.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const counter = entry.target;
+        const target = parseInt(counter.dataset.target, 10);
+
+        let current = 0;
+        const increment = Math.max(1, Math.ceil(target / 120));
+
+        const updateCounter = () => {
+          current += increment;
+
+          if (current >= target) {
+            current = target;
+          }
+
+          counter.textContent = current.toLocaleString();
+
+          if (current < target) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            if (target >= 1000) {
+              counter.textContent = target.toLocaleString() + "+";
+            }
+          }
+        };
+
+        updateCounter();
+        observer.unobserve(counter);
+      });
+    },
+    {
+      threshold: 0.5,
+    }
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+}
