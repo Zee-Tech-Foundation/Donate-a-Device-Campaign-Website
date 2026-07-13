@@ -17,33 +17,6 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container">
-        <nav class="nav">
-          <a href="index.html" class="brand">
-            <div class="brand-mark">ZT</div>
-            <div class="brand-name">Zee Tech <span>Foundation</span></div>
-          </a>
-
-          <div class="nav-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="campaign.html">Campaign</a>
-            <a href="donate.html">Donate</a>
-            <a href="apply.html">Apply</a>
-            <a href="partner.html">Partner</a>
-            <a href="impact.html">Impact</a>
-            <a href="contact.html">Contact</a>
-          </div>
-
-          <div class="nav-cta">
-            <a href="donate.html" class="btn btn-dark"> Donate </a>
-          </div>
-
-          <button class="menu-btn">☰</button>
-        </nav>
-      </div>
-    </header>
     <div data-header></div>
     <main>
       <section class="page-hero">
@@ -60,18 +33,18 @@
       <section class="block">
         <div class="container">
           <div class="grid cols-3">
-            <div class="card">
+            <div class="card reveal">
               <h3>Corporate device drives</h3>
               <p>
                 Retire and donate old fleets responsibly with certified data
                 wiping.
               </p>
             </div>
-            <div class="card">
+            <div class="card reveal delay-1">
               <h3>Refurbishment sponsorship</h3>
               <p>Fund a batch of devices from acquisition to delivery.</p>
             </div>
-            <div class="card">
+            <div class="card reveal delay-2">
               <h3>Community deployment</h3>
               <p>
                 Partner as a school, NGO or hub to receive and place devices.
@@ -81,10 +54,15 @@
         </div>
       </section>
 
-      <section class="block alt">
+      <section class="form-bg form-bg-partner">
         <div class="container" style="max-width: 720px">
-          <div class="section-head center"><h2>Start a conversation</h2></div>
-          <div class="card">
+          <div class="form-intro reveal">
+            <h2 style="color: #fff">Start a conversation</h2>
+            <p>
+              Tell us about your organisation and how you'd like to partner.
+            </p>
+          </div>
+          <div class="card reveal">
             <form
               class="form"
               data-demo="Thanks — a partnerships lead will reach out within 3 business days."
@@ -118,6 +96,16 @@
               <div class="field">
                 <label>Tell us more</label><textarea rows="5"></textarea>
               </div>
+              <div class="field field-check">
+                <input type="checkbox" id="terms" name="terms" required />
+                <label for="terms"
+                  >I agree to the
+                  <a href="terms.html" target="_blank"
+                    >Terms &amp; Conditions</a
+                  >
+                  and am authorised to represent this organisation.</label
+                >
+              </div>
               <button class="btn btn-primary" type="submit">
                 Send enquiry
               </button>
@@ -126,41 +114,6 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <h4>Zee Tech Foundation</h4>
-            <p>Empowering communities through digital access and education.</p>
-          </div>
-
-          <div>
-            <h4>Quick Links</h4>
-            <a href="about.html">About</a><br />
-            <a href="campaign.html">Campaign</a><br />
-            <a href="donate.html">Donate</a>
-          </div>
-
-          <div>
-            <h4>Resources</h4>
-            <a href="partner.html">Partner</a><br />
-            <a href="impact.html">Impact</a><br />
-            <a href="contact.html">Contact</a>
-          </div>
-
-          <div>
-            <h4>Contact</h4>
-            <p>info@zeetechfoundation.org</p>
-            <p>+234 810 326 9627</p>
-            <p>Bauchi, Nigeria</p>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          © 2026 Zee Tech Foundation. All Rights Reserved.
-        </div>
-      </div>
-    </footer>
     <div data-footer></div>
     <script src="main.js"></script>
   </body>
