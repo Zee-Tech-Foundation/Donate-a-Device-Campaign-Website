@@ -78,7 +78,7 @@
     t.textContent = msg;
     document.body.appendChild(t);
     requestAnimationFrame(() => t.classList.add("show"));
-    setTimeout(() => { t.classList.remove("show"); setTimeout(() => t.remove(), 300); }, 3200);
+    setTimeout(() => { t.classList.remove("show"); setTimeout(() => t.remove(), 200); }, 3000);
   }
 
   function bindForms() {
@@ -106,7 +106,7 @@
       entries.forEach((en) => {
         if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.10 });
     els.forEach((el) => io.observe(el));
   }
 
