@@ -1,9 +1,9 @@
 // Zee Tech Foundation — shared static site JS
 (function () {
-  const path = location.pathname.split("/").pop() || "home.html";
+  const path = location.pathname.split("/").pop() || "index.html";
 
   const NAV = [
-    { href: "home.html", label: "Home" },
+    { href: "index.html", label: "Home" },
     { href: "about.html", label: "About Us" },
     { href: "campaign.html", label: "Campaign" },
     { href: "donate.html", label: "Donate" },
@@ -16,22 +16,32 @@
   function renderHeader() {
     const el = document.querySelector("[data-header]");
     if (!el) return;
-    const links = NAV.map(
-      (n) => `<a href="${n.href}" class="${path === n.href ? "active" : ""}">${n.label}</a>`
-    ).join("");
+    const links = NAV.map((n) => {
+      const isActive = path === n.href;
+      return `<a href="${n.href}" class="${isActive ? "active" : ""}" ${
+        isActive ? 'aria-current="page"' : ""
+      }>${n.label}</a>`;
+    }).join("");
+    const mobileLinks = NAV.map((n) => {
+      const isActive = path === n.href;
+      return `<a href="${n.href}" ${
+        isActive ? 'aria-current="page"' : ""
+      }>${n.label}</a>`;
+    }).join("");
+
     el.innerHTML = `
       <header class="site-header">
         <div class="container nav">
-          <a class="brand" href="home.html">
+          <a class="brand" href="index.html">
             <span class="brand-mark">Z</span>
             <span class="brand-name">Zee Tech <span>Foundation</span></span>
           </a>
           <nav class="nav-links">${links}</nav>
           <div class="nav-cta"><a class="btn btn-primary" href="donate.html">Donate a device</a></div>
-          <button class="menu-btn" aria-label="Menu" onclick="document.getElementById('mnav').classList.toggle('open')">☰</button>
+          <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">☰</button>
         </div>
         <div id="mnav" class="mobile-nav">
-          ${NAV.map((n) => `<a href="${n.href}">${n.label}</a>`).join("")}
+          ${mobileLinks}
           <a href="donate.html" class="btn btn-primary" style="margin-top:.5rem">Donate a device</a>
         </div>
       </header>`;
@@ -98,6 +108,32 @@
     });
   }
 
+  function bindHeaderMenu() {
+    const menuBtn = document.querySelector(".menu-btn");
+    const mobileNav = document.getElementById("mnav");
+    if (!menuBtn || !mobileNav) return;
+
+    const closeMobileNav = () => {
+      mobileNav.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    };
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = mobileNav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", isOpen.toString());
+    });
+
+    mobileNav.querySelectorAll("a[href]").forEach((link) => {
+      link.addEventListener("click", closeMobileNav);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 960 && mobileNav.classList.contains("open")) {
+        closeMobileNav();
+      }
+    });
+  }
+
   function initReveal() {
     const els = document.querySelectorAll(".reveal");
     if (!els.length) return;
@@ -138,6 +174,7 @@
     renderHeader();
     renderFooter();
     bindForms();
+    bindHeaderMenu();
     initReveal();
     initHeroSlider();
   });
