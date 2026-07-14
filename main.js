@@ -1,16 +1,16 @@
-// Zee Tech Foundation — shared static site JS
+// Zee Tech Foundation - shared static site JS
 (function () {
   const path = location.pathname.split("/").pop() || "index.html";
 
   const NAV = [
-    { href: "index.html", label: "Home" },
-    { href: "about.html", label: "About Us" },
-    { href: "campaign.html", label: "Campaign" },
-    { href: "donate.html", label: "Donate" },
-    { href: "apply.html", label: "Apply" },
-    { href: "partner.html", label: "Partner" },
-    { href: "impact.html", label: "Impact" },
-    { href: "contact.html", label: "Contact" },
+    { href: "index", label: "Home" },
+    { href: "about", label: "About Us" },
+    { href: "campaign", label: "Campaign" },
+    { href: "donate", label: "Donate" },
+    { href: "apply", label: "Apply" },
+    { href: "partner", label: "Partner" },
+    { href: "impact", label: "Impact" },
+    { href: "contact", label: "Contact" },
   ];
 
   function renderHeader() {
@@ -32,12 +32,12 @@
     el.innerHTML = `
       <header class="site-header">
         <div class="container nav">
-          <a class="brand" href="index.html">
+          <a class="brand" href="index">
             <span class="brand-mark">Z</span>
             <span class="brand-name">Zee Tech <span>Foundation</span></span>
           </a>
           <nav class="nav-links">${links}</nav>
-          <div class="nav-cta"><a class="btn btn-primary" href="donate.html">Donate a device</a></div>
+          <div class="nav-cta"><a class="btn btn-primary" href="donate">Donate a device</a></div>
           <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mnav">☰</button>
         </div>
         <div id="mnav" class="mobile-nav">
@@ -63,20 +63,20 @@
             </div>
             <div>
               <h4>Explore</h4>
-              <a href="about.html">About</a><br><a href="campaign.html">Campaign</a><br><a href="impact.html">Impact</a><br><a href="contact.html">Contact</a>
+              <a href="about.php">About</a><br><a href="campaign.php">Campaign</a><br><a href="impact.php">Impact</a><br><a href="contact.php">Contact</a>
             </div>
             <div>
               <h4>Get involved</h4>
-              <a href="donate.html">Donate</a><br><a href="apply.html">Apply</a><br><a href="partner.html">Partner</a><br><a href="device-tracking.html">Track a device</a>
+              <a href="donate.php">Donate</a><br><a href="apply.php">Apply</a><br><a href="partner.php">Partner</a><br><a href="device-tracking.php">Track a device</a>
             </div>
             <div>
               <h4>Account</h4>
-              <a href="login.html">Sign in</a><br><a href="register.html">Register</a><br><a href="privacy.html">Privacy</a><br><a href="terms.html">Terms</a>
+              <a href="login">Sign in</a><br><a href="register">Register</a><br><a href="privacy">Privacy</a><br><a href="terms">Terms</a>
             </div>
           </div>
           <div class="footer-bottom">
             <span>© ${new Date().getFullYear()} Zee Tech Foundation. All rights reserved.</span>
-            <span>hello@zeetech.org · +000 000 0000</span>
+            <span>info@zeetechfoundation.org · +234 810 326 9627</span>
           </div>
         </div>
       </footer>`;
@@ -182,3 +182,47 @@
 
   window.ztfToast = toast;
 })();
+
+const counters = document.querySelectorAll(".num[data-target]");
+
+if (counters.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const counter = entry.target;
+        const target = parseInt(counter.dataset.target, 10);
+
+        let current = 0;
+        const increment = Math.max(1, Math.ceil(target / 120));
+
+        const updateCounter = () => {
+          current += increment;
+
+          if (current >= target) {
+            current = target;
+          }
+
+          counter.textContent = current.toLocaleString();
+
+          if (current < target) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            if (target >= 1000) {
+              counter.textContent = target.toLocaleString() + "+";
+            }
+          }
+        };
+
+        updateCounter();
+        observer.unobserve(counter);
+      });
+    },
+    {
+      threshold: 0.5,
+    }
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+}
