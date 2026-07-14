@@ -1,7 +1,7 @@
 -- Database schema for Zee Tech Foundation campaign site
 
-CREATE DATABASE IF NOT EXISTS donate_device CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE donate_device;
+-- CREATE DATABASE IF NOT EXISTS donate_device CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- USE donate_device;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
