@@ -1,0 +1,12 @@
+# Ignore common local files and environment data
+*.log
+*.cache
+*.tmp
+*.env
+.DS_Store
+Thumbs.db
+node_modules/
+vendor/
+
+# Keep config.php tracked so it can be pushed and edited on the server
+!config.php
