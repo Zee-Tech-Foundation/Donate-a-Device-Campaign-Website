@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 function start_secure_session(): void
 {
@@ -253,6 +254,47 @@ function get_application_by_id(int $id): ?array
     } catch (Throwable $e) {
         error_log('get_application_by_id failed: ' . $e->getMessage());
         return null;
+    }
+}
+
+function send_email(array $options): bool
+{
+    $mailer = new PHPMailer\PHPMailer\PHPMailer(true);
+
+    try {
+        $mailer->isSMTP();
+        $mailer->Host = SMTP_HOST;
+        $mailer->SMTPAuth = true;
+        $mailer->Username = SMTP_USERNAME;
+        $mailer->Password = SMTP_PASSWORD;
+        $mailer->SMTPSecure = SMTP_SECURE;
+        $mailer->Port = (int) SMTP_PORT;
+
+        $mailer->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
+        $mailer->addAddress($options['to'], $options['to_name'] ?? '');
+
+        if (!empty($options['reply_to'])) {
+            $mailer->addReplyTo($options['reply_to']);
+        }
+
+        $mailer->Subject = $options['subject'];
+        $mailer->CharSet = 'UTF-8';
+        $mailer->isHTML(true);
+
+        $htmlBody = $options['body'];
+        if (!preg_match('/<\s*html/i', $htmlBody)) {
+            $htmlBody = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>' . $htmlBody . '</body></html>';
+        }
+
+        $mailer->Body = $htmlBody;
+        if (!empty($options['alt_body'])) {
+            $mailer->AltBody = $options['alt_body'];
+        }
+
+        return $mailer->send();
+    } catch (Throwable $e) {
+        error_log('send_email failed: ' . $e->getMessage());
+        return false;
     }
 }
 

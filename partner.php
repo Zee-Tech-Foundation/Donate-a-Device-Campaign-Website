@@ -73,6 +73,43 @@ if (is_post()) {
                 ':terms_agreed' => $terms ? 1 : 0,
             ]);
             $success = true;
+
+            $thankYouBody = sprintf(
+                '<p>Hi %s,</p><p>Thank you for contacting Zee Tech Foundation about a potential partnership. We have received your enquiry and a member of our partnerships team will reach out within 3 business days.</p><p>Details submitted:</p><ul><li>Organisation: %s</li><li>Website: %s</li><li>Contact name: %s</li><li>Contact email: %s</li><li>Phone: %s</li><li>Type: %s</li></ul><p>We appreciate your interest in working with us.</p><p>Best regards,<br>Zee Tech Foundation</p>',
+                esc($contactName),
+                esc($organisationName),
+                esc($website ?: 'N/A'),
+                esc($contactName),
+                esc($contactEmail),
+                esc(sanitize_text($_POST['phone'] ?? 'N/A')),
+                esc($partnershipType)
+            );
+
+            send_email([
+                'to' => $contactEmail,
+                'to_name' => $contactName,
+                'subject' => 'Thank you for your partnership enquiry',
+                'body' => $thankYouBody,
+                'alt_body' => "Hi $contactName,\n\nThank you for contacting Zee Tech Foundation about a potential partnership. We have received your enquiry and a member of our partnerships team will reach out within 3 business days.\n\nOrganisation: $organisationName\nWebsite: " . ($website ?: 'N/A') . "\nContact name: $contactName\nContact email: $contactEmail\nPhone: " . (sanitize_text($_POST['phone'] ?? 'N/A')) . "\nType: $partnershipType\n\nWe appreciate your interest in working with us.\n\nBest regards,\nZee Tech Foundation",
+            ]);
+
+            $adminBody = sprintf(
+                '<p>A new partner enquiry has been submitted:</p><ul><li>Organisation: %s</li><li>Website: %s</li><li>Contact name: %s</li><li>Email: %s</li><li>Phone: %s</li><li>Partnership type: %s</li><li>Message: %s</li></ul>',
+                esc($organisationName),
+                esc($website ?: 'N/A'),
+                esc($contactName),
+                esc($contactEmail),
+                esc(sanitize_text($_POST['phone'] ?? 'N/A')),
+                esc($partnershipType),
+                nl2br(esc($message))
+            );
+
+            send_email([
+                'to' => ADMIN_EMAIL,
+                'subject' => 'New partner request received',
+                'body' => $adminBody,
+                'alt_body' => "A new partner enquiry has been submitted:\nOrganisation: $organisationName\nWebsite: " . ($website ?: 'N/A') . "\nContact name: $contactName\nEmail: $contactEmail\nPhone: " . (sanitize_text($_POST['phone'] ?? 'N/A')) . "\nPartnership type: $partnershipType\nMessage: $message",
+            ]);
         } catch (Throwable $e) {
             error_log('Partner save failed: ' . $e->getMessage());
             $errors[] = 'Unable to submit your partnership enquiry right now. Please try again later.';

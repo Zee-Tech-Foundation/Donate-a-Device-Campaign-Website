@@ -70,7 +70,42 @@ if (is_post()) {
                 ':handover_preference' => $handoverPreference,
                 ':terms_agreed' => $terms ? 1 : 0,
             ]);
+
             $success = true;
+
+            $thankYouBody = sprintf(
+                '<p>Hi %s,</p><p>Thank you for offering to donate %d %s to Zee Tech Foundation.</p><p>We will contact you shortly to arrange the handover and ensure your device is securely wiped.</p><p>Best regards,<br>Zee Tech Foundation</p>',
+                esc($fullName),
+                $quantity,
+                esc($deviceType)
+            );
+
+            send_email([
+                'to' => $email,
+                'to_name' => $fullName,
+                'subject' => 'Thank you for your donation',
+                'body' => $thankYouBody,
+                'alt_body' => "Hi $fullName,\n\nThank you for offering to donate $quantity $deviceType to Zee Tech Foundation. We will contact you shortly to arrange the handover and ensure your device is securely wiped.\n\nBest regards,\nZee Tech Foundation",
+            ]);
+
+            $adminBody = sprintf(
+                '<p>New donation received:</p><ul><li>Name: %s</li><li>Email: %s</li><li>Phone: %s</li><li>City: %s</li><li>Device Type: %s</li><li>Quantity: %d</li><li>Handover: %s</li><li>Notes: %s</li></ul><p>Please review and follow up as appropriate.</p>',
+                esc($fullName),
+                esc($email),
+                esc($phone),
+                esc($city),
+                esc($deviceType),
+                $quantity,
+                esc($handoverPreference),
+                nl2br(esc($conditionNotes))
+            );
+
+            send_email([
+                'to' => ADMIN_EMAIL,
+                'subject' => 'New device donation submitted',
+                'body' => $adminBody,
+                'alt_body' => "New donation received:\nName: $fullName\nEmail: $email\nPhone: $phone\nCity: $city\nDevice Type: $deviceType\nQuantity: $quantity\nHandover: $handoverPreference\nNotes: $conditionNotes",
+            ]);
         } catch (Throwable $e) {
             error_log('Donation save failed: ' . $e->getMessage());
             $errors[] = 'Unable to submit your donation request right now. Please try again later.';

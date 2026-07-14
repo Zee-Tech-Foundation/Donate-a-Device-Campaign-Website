@@ -75,6 +75,40 @@ if (is_post()) {
                 ':terms_agreed' => $terms ? 1 : 0,
             ]);
             $success = true;
+
+            $thankYouBody = sprintf(
+                '<p>Hi %s,</p><p>Thank you for submitting your device application to Zee Tech Foundation. We have received your request and will review it based on need and inventory availability.</p><p>Application details:</p><ul><li>Applicant type: %s</li><li>Organisation: %s</li><li>Location: %s</li></ul><p>We will contact you soon with the next steps.</p><p>Best regards,<br>Zee Tech Foundation</p>',
+                esc($fullName),
+                esc($applicantType),
+                esc($organisation ?: 'N/A'),
+                esc($location)
+            );
+
+            send_email([
+                'to' => $email,
+                'to_name' => $fullName,
+                'subject' => 'Thank you for your application',
+                'body' => $thankYouBody,
+                'alt_body' => "Hi $fullName,\n\nThank you for submitting your device application to Zee Tech Foundation. We have received your request and will review it based on need and inventory availability.\n\nApplicant type: $applicantType\nOrganisation: " . ($organisation ?: 'N/A') . "\nLocation: $location\n\nWe will contact you soon with the next steps.\n\nBest regards,\nZee Tech Foundation",
+            ]);
+
+            $adminBody = sprintf(
+                '<p>A new device application has been submitted:</p><ul><li>Name: %s</li><li>Email: %s</li><li>Phone: %s</li><li>Applicant type: %s</li><li>Organisation: %s</li><li>Location: %s</li><li>Reason: %s</li></ul>',
+                esc($fullName),
+                esc($email),
+                esc($phone),
+                esc($applicantType),
+                esc($organisation ?: 'N/A'),
+                esc($location),
+                nl2br(esc($reason))
+            );
+
+            send_email([
+                'to' => ADMIN_EMAIL,
+                'subject' => 'New device application submitted',
+                'body' => $adminBody,
+                'alt_body' => "A new device application has been submitted:\nName: $fullName\nEmail: $email\nPhone: $phone\nApplicant type: $applicantType\nOrganisation: " . ($organisation ?: 'N/A') . "\nLocation: $location\nReason: $reason",
+            ]);
         } catch (Throwable $e) {
             error_log('Application save failed: ' . $e->getMessage());
             $errors[] = 'Unable to submit your application right now. Please try again later.';

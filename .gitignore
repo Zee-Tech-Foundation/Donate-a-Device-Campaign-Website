@@ -6,7 +6,7 @@
 .DS_Store
 Thumbs.db
 node_modules/
-vendor/
+# vendor/
 
 # Keep config.php tracked so it can be pushed and edited on the server
 !config.php
