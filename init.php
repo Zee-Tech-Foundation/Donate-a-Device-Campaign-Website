@@ -243,7 +243,7 @@ function clear_password_reset_token(int $userId): bool
         return $stmt->execute([':id' => $userId]);
     } catch (Throwable $e) {
         error_log('clear_password_reset_token failed: ' . $e->getMessage());
-        return null;
+        return false;
     }
 }
 

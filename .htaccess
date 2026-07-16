@@ -6,7 +6,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Route extensionless URLs to their PHP equivalents
-RewriteRule ^(index|about|campaign|donate|apply|partner|impact|contact|privacy|terms|login|register|logout|admin-dashboard|applicant-dashboard|donor-dashboard|application-status|device-tracking|applications|application|donations|donation|contacts|contact-message|partner-requests|partner-request)$ $1.php [L,QSA]
+RewriteRule ^(index|about|campaign|donate|apply|partner|impact|contact|privacy|terms|login|register|forgot-password|logout|admin-dashboard|applicant-dashboard|donor-dashboard|application-status|device-tracking|applications|application|donations|donation|contacts|contact-message|partner-requests|partner-request)$ $1.php [L,QSA]
 
 # Preserve direct PHP access when needed
 RewriteRule ^(.*\.php)$ $1 [L,QSA]
