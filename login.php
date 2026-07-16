@@ -81,6 +81,9 @@ require_once __DIR__ . '/templates/header.php';
         <p class="text-center mt-3 muted">
           No account? <a href="register">Register</a>
         </p>
+        <p class="text-center mt-2 muted">
+          Forgot password? <a href="forgot-password">Reset it</a>
+        </p>
       </div>
     </section>
 <?php

@@ -206,6 +206,62 @@ function get_user_by_email(string $email): ?array
     }
 }
 
+function set_password_reset_token(int $userId, string $token, string $expiresAt): bool
+{
+    try {
+        $db = db_connect();
+        $stmt = $db->prepare('UPDATE users SET reset_token = :token, reset_token_expires_at = :expires_at WHERE id = :id');
+        return $stmt->execute([
+            ':token' => $token,
+            ':expires_at' => $expiresAt,
+            ':id' => $userId,
+        ]);
+    } catch (Throwable $e) {
+        error_log('set_password_reset_token failed: ' . $e->getMessage());
+        return false;
+    }
+}
+
+function get_user_by_reset_token(string $token): ?array
+{
+    try {
+        $db = db_connect();
+        $stmt = $db->prepare('SELECT id, name, email FROM users WHERE reset_token = :token AND reset_token_expires_at > NOW() LIMIT 1');
+        $stmt->execute([':token' => $token]);
+        return $stmt->fetch() ?: null;
+    } catch (Throwable $e) {
+        error_log('get_user_by_reset_token failed: ' . $e->getMessage());
+        return null;
+    }
+}
+
+function clear_password_reset_token(int $userId): bool
+{
+    try {
+        $db = db_connect();
+        $stmt = $db->prepare('UPDATE users SET reset_token = NULL, reset_token_expires_at = NULL WHERE id = :id');
+        return $stmt->execute([':id' => $userId]);
+    } catch (Throwable $e) {
+        error_log('clear_password_reset_token failed: ' . $e->getMessage());
+        return null;
+    }
+}
+
+function update_user_password(int $userId, string $newPassword): bool
+{
+    try {
+        $db = db_connect();
+        $stmt = $db->prepare('UPDATE users SET password_hash = :password_hash WHERE id = :id');
+        return $stmt->execute([
+            ':password_hash' => hash_password($newPassword),
+            ':id' => $userId,
+        ]);
+    } catch (Throwable $e) {
+        error_log('update_user_password failed: ' . $e->getMessage());
+        return false;
+    }
+}
+
 function get_user_donations(string $email): array
 {
     try {

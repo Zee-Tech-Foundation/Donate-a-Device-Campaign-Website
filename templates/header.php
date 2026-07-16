@@ -25,6 +25,15 @@ $pageRobots = $pageRobots ?? 'index, follow';
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17946932034"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17946932034');
+  </script>
   <body>
     <?php $user = current_user(); ?>
     <header class="site-header">
