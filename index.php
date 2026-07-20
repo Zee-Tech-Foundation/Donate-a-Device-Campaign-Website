@@ -129,19 +129,19 @@ require_once __DIR__ . '/templates/header.php';
 
           <div class="grid cols-4">
             <div class="card stat reveal">
-              <div class="num">2,400+</div>
+              <div class="num">0</div>
               <div class="lbl">Devices delivered</div>
             </div>
             <div class="card stat reveal delay-1">
-              <div class="num">1,850</div>
+              <div class="num">0</div>
               <div class="lbl">Beneficiaries reached</div>
             </div>
             <div class="card stat reveal delay-2">
-              <div class="num">60</div>
+              <div class="num">0</div>
               <div class="lbl">Partner organisations</div>
             </div>
             <div class="card stat reveal delay-3">
-              <div class="num">18</div>
+              <div class="num">0</div>
               <div class="lbl">Communities served</div>
             </div>
           </div>
@@ -480,7 +480,7 @@ require_once __DIR__ . '/templates/header.php';
           </div>
         </div>
       </section>
-
+<!-- 
       <section class="partners reveal">
         <div class="container"><h2>Trusted by partners across the world</h2></div>
         <div class="partners-track-wrap">
@@ -498,6 +498,6 @@ require_once __DIR__ . '/templates/header.php';
             <div class="partner-logo"><img src="images/partner-13.png" width="100" alt="sponsor"></div>
           </div>
         </div>
-      </section>
+      </section> -->
 <?php
 require_once __DIR__ . '/templates/footer.php';

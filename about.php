@@ -305,22 +305,22 @@ require_once __DIR__ . '/templates/header.php';
               <img
                 class="team-img"
                 src="images/team-1.jpg"
-                alt="Ada Musa - Executive Director"
+                alt="Zubairu Jubril - Executive Director"
               />
 
-              <h3>Ada Musa</h3>
+              <h3>Zubairu Jubril</h3>
 
-              <p class="muted">Executive Director</p>
+              <p class="muted">Founder/Executive Director</p>
             </div>
 
             <div class="card team-card reveal delay-1">
               <img
                 class="team-img"
                 src="images/team-2.jpg"
-                alt="Bola Adekunle - Operations Lead"
+                alt="Dorcas Daniel - Operations Lead"
               />
 
-              <h3>Bola Adekunle</h3>
+              <h3>Dorcas Daniel</h3>
 
               <p class="muted">Operations Lead</p>
             </div>
@@ -329,10 +329,10 @@ require_once __DIR__ . '/templates/header.php';
               <img
                 class="team-img"
                 src="images/team-3.jpg"
-                alt="Chinedu Okafor - Refurbishment Lead"
+                alt="Daniella Ochi - Refurbishment Lead"
               />
 
-              <h3>Chinedu Okafor</h3>
+              <h3>Daniella Ochi</h3>
 
               <p class="muted">Refurbishment Lead</p>
             </div>
@@ -341,12 +341,12 @@ require_once __DIR__ . '/templates/header.php';
               <img
                 class="team-img"
                 src="images/team-4.jpg"
-                alt="Dami Ojo - Partnerships"
+                alt="Adebisi Covenant - Partnerships"
               />
 
-              <h3>Dami Ojo</h3>
+              <h3>Adebisi Covenant</h3>
 
-              <p class="muted">Partnerships Lead</p>
+              <p class="muted">Developer</p>
             </div>
           </div>
         </div>

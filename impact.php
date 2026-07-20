@@ -27,22 +27,22 @@ require_once __DIR__ . '/templates/header.php';
         <div class="container">
           <div class="grid cols-4">
             <div class="card stat reveal">
-                <div class="num" data-target="2400">0</div>
+                <div class="num" data-target="0">0</div>
                 <div class="lbl">Devices Donated</div>
             </div>
 
             <div class="card stat reveal delay-1">
-                <div class="num" data-target="1850">0</div>
+                <div class="num" data-target="0">0</div>
                 <div class="lbl">Beneficiaries Reached</div>
             </div>
 
             <div class="card stat reveal delay-2">
-                <div class="num" data-target="60">0</div>
+                <div class="num" data-target="0">0</div>
                 <div class="lbl">Partner Organisations</div>
             </div>
 
             <div class="card stat reveal delay-3">
-                <div class="num" data-target="18">0</div>
+                <div class="num" data-target="0">0</div>
                 <div class="lbl">Communities Served</div>
             </div>
         </div>
