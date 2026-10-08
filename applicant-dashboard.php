@@ -33,44 +33,62 @@ require_once __DIR__ . '/templates/header.php';
             <a class="btn btn-primary" href="apply">Submit application</a>
           </div>
         <?php else: ?>
-          <?php $application = $applications[0]; ?>
+          <?php 
+            $application = $applications[0]; 
+            $st = $application['status'] ?? 'pending';
+            $badgeClass = match ($st) {
+                'approved' => 'success',
+                'rejected' => 'danger',
+                default => 'gray',
+            };
+          ?>
           <div class="card">
             <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
               <div>
                 <p class="muted" style="margin: 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">Application ID</p>
                 <p style="margin: 0.25rem 0; font-family: monospace">APP-<?= date('Y'); ?>-<?= esc((string)$application['id']); ?></p>
               </div>
-              <span class="badge <?= $application['status'] !== 'pending' ? '' : 'gray'; ?>"><?= esc((string)$application['status']); ?></span>
+              <span class="badge <?= $badgeClass; ?>"><?= ucfirst(esc($st)); ?></span>
             </div>
             <ol class="timeline mt-3">
               <li>
                 <div class="dot">1</div>
                 <div class="body">
-                  <strong>Submitted</strong><small><?= esc((string)$application['created_at']); ?></small>
+                  <strong>Submitted</strong><small><?= esc((string)date('d M, Y', strtotime($application['created_at']))); ?></small>
                 </div>
               </li>
               <li>
-                <div class="dot">2</div>
+                <div class="dot" style="<?= $st !== 'pending' ? 'background:#10b981; color:#fff;' : ''; ?>">2</div>
                 <div class="body">
-                  <strong>Under review</strong><small>Currently in this stage</small>
+                  <strong>Under review</strong><small><?= $st === 'pending' ? 'Currently in this stage' : 'Completed'; ?></small>
                 </div>
               </li>
               <li>
-                <div class="dot" style="background: #dbe3ec; color: var(--muted)">3</div>
+                <div class="dot" style="<?= $st === 'approved' ? 'background:#1a7a4b; color:#fff;' : ($st === 'rejected' ? 'background:#c0392b; color:#fff;' : 'background: #dbe3ec; color: var(--muted);'); ?>">3</div>
                 <div class="body">
-                  <strong>Approved</strong><small>Pending</small>
+                  <strong><?= $st === 'rejected' ? 'Disapproved' : 'Approved'; ?></strong>
+                  <small>
+                    <?php if ($st === 'approved'): ?>
+                      Application Approved - Device allocation in progress
+                    <?php elseif ($st === 'rejected'): ?>
+                      Application Not Approved
+                    <?php else: ?>
+                      Pending Review
+                    <?php endif; ?>
+                  </small>
                 </div>
               </li>
               <li>
-                <div class="dot" style="background: #dbe3ec; color: var(--muted)">4</div>
+                <div class="dot" style="<?= $st === 'approved' ? '' : 'background: #dbe3ec; color: var(--muted);'; ?>">4</div>
                 <div class="body">
-                  <strong>Device dispatched</strong><small>Pending</small>
+                  <strong>Device dispatched</strong><small><?= $st === 'approved' ? 'In progress' : 'Pending'; ?></small>
                 </div>
               </li>
             </ol>
             <a class="btn btn-ghost mt-3" href="application-status">Check another application</a>
           </div>
         <?php endif; ?>
+
       </div>
     </section>
 <?php

@@ -851,6 +851,83 @@ function update_donation_status(int $id, string $status): bool
     }
 }
 
+function update_application_status(int $id, string $status): bool
+{
+    if (!in_array($status, ['approved', 'rejected', 'pending'], true)) {
+        return false;
+    }
+
+    try {
+        $db = db_connect();
+        $stmt = $db->prepare('UPDATE applications SET status = :status WHERE id = :id LIMIT 1');
+        $updated = $stmt->execute([':status' => $status, ':id' => $id]);
+
+        if ($updated) {
+            $application = get_application_by_id($id);
+            if ($application) {
+                $email = $application['email'];
+                $fullName = $application['full_name'];
+                $applicantType = $application['applicant_type'];
+
+                if ($status === 'approved') {
+                    $subject = 'Your Device Application Has Been Approved - Zee Tech Foundation';
+                    $body = sprintf(
+                        '<p>Hi %s,</p>' .
+                        '<p>Congratulations! Your device application to Zee Tech Foundation has been <strong>APPROVED</strong>.</p>' .
+                        '<p>Application Details:</p>' .
+                        '<ul>' .
+                        '<li><strong>Reference ID:</strong> APP-%s-%d</li>' .
+                        '<li><strong>Applicant Type:</strong> %s</li>' .
+                        '</ul>' .
+                        '<p>Our team is preparing a refurbished device for dispatch. We will contact you shortly regarding delivery details.</p>' .
+                        '<p>Best regards,<br>Zee Tech Foundation Team</p>',
+                        esc($fullName),
+                        date('Y'),
+                        $id,
+                        esc($applicantType)
+                    );
+                    $altBody = "Hi $fullName,\n\nCongratulations! Your device application (APP-" . date('Y') . "-$id) has been APPROVED by Zee Tech Foundation.\n\nOur team is preparing a refurbished device for dispatch. We will contact you shortly regarding delivery details.\n\nBest regards,\nZee Tech Foundation Team";
+
+                    send_email([
+                        'to' => $email,
+                        'to_name' => $fullName,
+                        'subject' => $subject,
+                        'body' => $body,
+                        'alt_body' => $altBody,
+                    ]);
+                } elseif ($status === 'rejected') {
+                    $subject = 'Update Regarding Your Device Application - Zee Tech Foundation';
+                    $body = sprintf(
+                        '<p>Hi %s,</p>' .
+                        '<p>Thank you for applying for a refurbished device with Zee Tech Foundation.</p>' .
+                        '<p>After carefully reviewing your application (Reference ID: APP-%s-%d), we regret to inform you that we are unable to approve your request at this time due to current inventory availability and selection priorities.</p>' .
+                        '<p>We encourage you to re-apply in future campaign cycles as more devices become available.</p>' .
+                        '<p>Best regards,<br>Zee Tech Foundation Team</p>',
+                        esc($fullName),
+                        date('Y'),
+                        $id
+                    );
+                    $altBody = "Hi $fullName,\n\nThank you for applying for a refurbished device with Zee Tech Foundation.\n\nAfter carefully reviewing your application (APP-" . date('Y') . "-$id), we regret to inform you that we are unable to approve your request at this time.\n\nWe encourage you to re-apply in future campaign cycles.\n\nBest regards,\nZee Tech Foundation Team";
+
+                    send_email([
+                        'to' => $email,
+                        'to_name' => $fullName,
+                        'subject' => $subject,
+                        'body' => $body,
+                        'alt_body' => $altBody,
+                    ]);
+                }
+            }
+        }
+
+        return $updated;
+    } catch (Throwable $e) {
+        error_log('update_application_status error: ' . $e->getMessage());
+        return false;
+    }
+}
+
 start_secure_session();
 send_security_headers();
+
 
