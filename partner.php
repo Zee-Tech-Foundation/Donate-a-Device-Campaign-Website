@@ -58,8 +58,12 @@ if (is_post()) {
         $errors[] = 'A partnership enquiry from this email or organisation already exists. Please wait while we review your request.';
     }
 
+    $accountCreatedInfo = null;
+
     if (empty($errors)) {
         try {
+            $accountCreatedInfo = provision_user_account_if_needed($contactEmail, $contactName, 'partner');
+
             $db = db_connect();
             $stmt = $db->prepare('INSERT INTO partners (organisation_name, website, contact_name, email, phone, partnership_type, message, terms_agreed, created_at) VALUES (:organisation_name, :website, :contact_name, :email, :phone, :partnership_type, :message, :terms_agreed, NOW())');
             $stmt->execute([
@@ -167,8 +171,14 @@ require_once __DIR__ . '/templates/header.php';
             <div class="card" style="border-color: #1a7a4b; background: #f0fbf5; color: #0f3f1e;">
               <h3>Enquiry sent</h3>
               <p>Thank you. A partnership lead will reach out within 3 business days.</p>
+              <?php if (!empty($accountCreatedInfo['created'])): ?>
+                <p style="margin-top: 0.75rem; font-size: 0.95rem; background: #e6f4ea; padding: 0.75rem; border-radius: 6px;">
+                  <strong>Account Created:</strong> An account has been created for you, and a temporary password was sent to <strong><?= esc($contactEmail); ?></strong>. You are currently signed in!
+                </p>
+              <?php endif; ?>
             </div>
           <?php else: ?>
+
             <?php if (!empty($errors)): ?>
               <div class="card" style="border-color: #c0392b; background: #fff2f2; color: #6b1d1d;">
                 <h3>Please correct the errors below</h3>

@@ -11,19 +11,27 @@ if ($id > 0) {
     $donation = get_donation_by_id($id);
 }
 
-if (is_post() && isset($_POST['delete_id'])) {
+if (is_post()) {
     $token = $_POST['csrf_token'] ?? null;
     if (!validate_csrf_token($token)) {
         http_response_code(400);
         echo 'Invalid form submission.';
         exit;
     }
-    if (delete_donation_by_id(sanitize_int($_POST['delete_id'] ?? 0))) {
-        redirect('donations');
+    if (isset($_POST['delete_id'])) {
+        if (delete_donation_by_id(sanitize_int($_POST['delete_id'] ?? 0))) {
+            redirect('donations');
+        }
+        http_response_code(500);
+        echo 'Unable to delete donation.';
+        exit;
+    } elseif (isset($_POST['update_status']) && $id > 0) {
+        $newStatus = sanitize_text($_POST['update_status']);
+        if (in_array($newStatus, ['approved', 'rejected'], true)) {
+            update_donation_status($id, $newStatus);
+            redirect('donation?id=' . $id . '&status_updated=' . $newStatus);
+        }
     }
-    http_response_code(500);
-    echo 'Unable to delete donation.';
-    exit;
 }
 
 if (!$donation) {
@@ -43,6 +51,9 @@ if (!$donation) {
     return;
 }
 
+$statusUpdated = $_GET['status_updated'] ?? null;
+$currentStatus = $donation['status'] ?? 'pending';
+
 $pageTitle = 'Donation #' . esc((string)$donation['id']);
 $pageDescription = 'Donation details for ' . esc((string)$donation['full_name']) . '.';
 
@@ -56,6 +67,16 @@ require_once __DIR__ . '/templates/header.php';
           <p class="muted">Review the donor and device information submitted.</p>
         </div>
 
+        <?php if ($statusUpdated === 'approved'): ?>
+          <div class="card" style="border-color: #1a7a4b; background: #f0fbf5; color: #0f3f1e; margin-bottom: 1.5rem;">
+            <p style="margin:0"><strong>Donation Approved:</strong> Status updated to Approved and confirmation email sent to donor (<?= esc($donation['email']); ?>).</p>
+          </div>
+        <?php elseif ($statusUpdated === 'rejected'): ?>
+          <div class="card" style="border-color: #c0392b; background: #fff2f2; color: #6b1d1d; margin-bottom: 1.5rem;">
+            <p style="margin:0"><strong>Donation Disapproved:</strong> Status updated to Disapproved and notification email sent to donor (<?= esc($donation['email']); ?>).</p>
+          </div>
+        <?php endif; ?>
+
         <div class="card">
           <dl class="detail-list">
             <dt>Donor</dt>
@@ -66,6 +87,13 @@ require_once __DIR__ . '/templates/header.php';
 
             <dt>Phone</dt>
             <dd><?= esc((string)$donation['phone']); ?></dd>
+
+            <dt>Status</dt>
+            <dd>
+              <span class="badge <?= $currentStatus === 'approved' ? 'success' : ($currentStatus === 'rejected' ? 'danger' : 'gray'); ?>">
+                <?= ucfirst(esc($currentStatus)); ?>
+              </span>
+            </dd>
 
             <dt>Device Type</dt>
             <dd><?= esc((string)$donation['device_type']); ?></dd>
@@ -83,7 +111,23 @@ require_once __DIR__ . '/templates/header.php';
             <dd><?= esc((string) date('d M, Y - h:i A', strtotime($donation['created_at']))); ?></dd>
           </dl>
 
-          <div class="card-footer" style="text-align:right; display:flex; gap:.75rem; justify-content:flex-end;">
+          <div class="card-footer" style="text-align:right; display:flex; gap:.75rem; justify-content:flex-end; flex-wrap:wrap; align-items:center;">
+            <form method="post" action="donation?id=<?= esc((string)$donation['id']); ?>" style="margin:0;">
+              <?= csrf_input(); ?>
+              <input type="hidden" name="update_status" value="approved" />
+              <button class="btn btn-primary" type="submit" style="background-color: #1a7a4b; border-color: #1a7a4b;" <?= $currentStatus === 'approved' ? 'disabled' : ''; ?>>
+                <?= $currentStatus === 'approved' ? 'Approved' : 'Approve Donation'; ?>
+              </button>
+            </form>
+
+            <form method="post" action="donation?id=<?= esc((string)$donation['id']); ?>" style="margin:0;">
+              <?= csrf_input(); ?>
+              <input type="hidden" name="update_status" value="rejected" />
+              <button class="btn btn-secondary" type="submit" style="background-color: #c0392b; color: #fff; border-color: #c0392b;" <?= $currentStatus === 'rejected' ? 'disabled' : ''; ?> onclick="return confirm('Disapprove this donation? A notification email will be sent to the donor.');">
+                <?= $currentStatus === 'rejected' ? 'Disapproved' : 'Disapprove Donation'; ?>
+              </button>
+            </form>
+
             <form method="post" action="donation?id=<?= esc((string)$donation['id']); ?>" style="margin:0;">
               <?= csrf_input(); ?>
               <input type="hidden" name="delete_id" value="<?= esc((string)$donation['id']); ?>" />
@@ -94,5 +138,6 @@ require_once __DIR__ . '/templates/header.php';
         </div>
       </div>
     </section>
+
 <?php
 require_once __DIR__ . '/templates/footer.php';

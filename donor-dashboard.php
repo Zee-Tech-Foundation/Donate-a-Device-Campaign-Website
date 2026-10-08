@@ -64,16 +64,22 @@ require_once __DIR__ . '/templates/header.php';
                 <tr><td colspan="6">No donations found. Start by submitting one.</td></tr>
               <?php else: ?>
                 <?php foreach ($donations as $donation): ?>
+                  <?php $st = $donation['status'] ?? 'pending'; ?>
                   <tr>
                     <td><code>DEV-<?= esc((string)$donation['id']); ?></code></td>
                     <td><?= esc((string)$donation['device_type']); ?></td>
-                    <td><?= esc((string)$donation['created_at']); ?></td>
-                    <td><span class="badge <?= 'gray'; ?>"><?= esc('Delivered'); ?></span></td>
+                    <td><?= esc((string) date('d M, Y', strtotime($donation['created_at']))); ?></td>
+                    <td>
+                      <span class="badge <?= $st === 'approved' ? 'success' : ($st === 'rejected' ? 'danger' : 'gray'); ?>">
+                        <?= ucfirst(esc($st)); ?>
+                      </span>
+                    </td>
                     <td><?= esc('-'); ?></td>
-                    <td><a href="device-tracking">Track</a></td>
+                    <td><a href="device-tracking?id=DEV-<?= esc((string)$donation['id']); ?>">Track</a></td>
                   </tr>
                 <?php endforeach; ?>
               <?php endif; ?>
+
             </tbody>
           </table>
         </div>

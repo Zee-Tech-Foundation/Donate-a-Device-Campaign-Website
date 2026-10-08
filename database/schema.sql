@@ -7,8 +7,9 @@ CREATE TABLE IF NOT EXISTS users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(120) NOT NULL,
     email VARCHAR(180) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) DEFAULT NULL,
     role ENUM('admin','donor','applicant','partner') NOT NULL DEFAULT 'donor',
+    google_id VARCHAR(255) DEFAULT NULL,
     reset_token VARCHAR(255) DEFAULT NULL,
     reset_token_expires_at DATETIME DEFAULT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -26,6 +27,7 @@ CREATE TABLE IF NOT EXISTS donations (
     condition_notes TEXT,
     handover_preference VARCHAR(40) NOT NULL,
     terms_agreed TINYINT(1) NOT NULL DEFAULT 1,
+    status ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

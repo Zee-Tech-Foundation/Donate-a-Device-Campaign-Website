@@ -585,5 +585,272 @@ function get_dashboard_route(string $role): string
     };
 }
 
+function get_google_auth_url(string $state): string
+{
+    $params = [
+        'client_id' => GOOGLE_CLIENT_ID,
+        'redirect_uri' => GOOGLE_REDIRECT_URI,
+        'response_type' => 'code',
+        'scope' => 'openid email profile',
+        'state' => $state,
+        'prompt' => 'select_account',
+    ];
+    return 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query($params);
+}
+
+function handle_google_oauth_callback(string $code): ?array
+{
+    if (empty(GOOGLE_CLIENT_ID) || empty(GOOGLE_CLIENT_SECRET)) {
+        error_log('Google OAuth credentials not configured.');
+        return null;
+    }
+
+    $tokenUrl = 'https://oauth2.googleapis.com/token';
+    $postFields = http_build_query([
+        'code' => $code,
+        'client_id' => GOOGLE_CLIENT_ID,
+        'client_secret' => GOOGLE_CLIENT_SECRET,
+        'redirect_uri' => GOOGLE_REDIRECT_URI,
+        'grant_type' => 'authorization_code',
+    ]);
+
+    $ch = curl_init($tokenUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200 || !$response) {
+        error_log('Google OAuth token exchange failed: ' . ($response ?: 'No response'));
+        return null;
+    }
+
+    $tokenData = json_decode($response, true);
+    $accessToken = $tokenData['access_token'] ?? null;
+    if (!$accessToken) {
+        return null;
+    }
+
+    $userInfoUrl = 'https://www.googleapis.com/oauth2/v3/userinfo';
+    $ch = curl_init($userInfoUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $accessToken]);
+    $userResponse = curl_exec($ch);
+    $userHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($userHttpCode !== 200 || !$userResponse) {
+        error_log('Google OAuth userinfo request failed');
+        return null;
+    }
+
+    return json_decode($userResponse, true);
+}
+
+function find_or_create_google_user(array $profile): ?array
+{
+    $email = filter_var($profile['email'] ?? '', FILTER_VALIDATE_EMAIL);
+    $googleId = (string)($profile['sub'] ?? '');
+    $name = trim($profile['name'] ?? $profile['given_name'] ?? 'Google User');
+
+    if (!$email) {
+        return null;
+    }
+
+    try {
+        $db = db_connect();
+
+        $stmt = $db->prepare('SELECT id, name, email, password_hash, role, google_id FROM users WHERE google_id = :google_id OR email = :email LIMIT 1');
+        $stmt->execute([
+            ':google_id' => $googleId,
+            ':email' => $email,
+        ]);
+        $user = $stmt->fetch();
+
+        if ($user) {
+            if (empty($user['google_id']) && $googleId !== '') {
+                $upStmt = $db->prepare('UPDATE users SET google_id = :google_id WHERE id = :id');
+                $upStmt->execute([':google_id' => $googleId, ':id' => $user['id']]);
+                $user['google_id'] = $googleId;
+            }
+            return $user;
+        }
+
+        $passwordHash = hash_password(bin2hex(random_bytes(16)));
+        $insertStmt = $db->prepare('INSERT INTO users (name, email, password_hash, role, google_id, created_at, updated_at) VALUES (:name, :email, :password_hash, :role, :google_id, NOW(), NOW())');
+        $insertStmt->execute([
+            ':name' => $name,
+            ':email' => $email,
+            ':password_hash' => $passwordHash,
+            ':role' => 'applicant',
+            ':google_id' => $googleId,
+        ]);
+
+        $newId = (int)$db->lastInsertId();
+        return [
+            'id' => $newId,
+            'name' => $name,
+            'email' => $email,
+            'role' => 'applicant',
+            'google_id' => $googleId,
+        ];
+    } catch (Throwable $e) {
+        error_log('find_or_create_google_user error: ' . $e->getMessage());
+        return null;
+    }
+}
+
+function provision_user_account_if_needed(string $email, string $fullName, string $role = 'applicant'): array
+{
+    $email = sanitize_email($email);
+    $fullName = sanitize_text($fullName);
+
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return ['user' => null, 'created' => false, 'temp_password' => null];
+    }
+
+    $existingUser = get_user_by_email($email);
+    if ($existingUser) {
+        if (!is_logged_in()) {
+            login_user($existingUser);
+        }
+        return ['user' => $existingUser, 'created' => false, 'temp_password' => null];
+    }
+
+    $tempPassword = bin2hex(random_bytes(4));
+    $passwordHash = hash_password($tempPassword);
+
+    try {
+        $db = db_connect();
+        $stmt = $db->prepare('INSERT INTO users (name, email, password_hash, role, created_at, updated_at) VALUES (:name, :email, :password_hash, :role, NOW(), NOW())');
+        $stmt->execute([
+            ':name' => $fullName,
+            ':email' => $email,
+            ':password_hash' => $passwordHash,
+            ':role' => $role,
+        ]);
+
+        $newUserId = (int)$db->lastInsertId();
+        $newUser = [
+            'id' => $newUserId,
+            'name' => $fullName,
+            'email' => $email,
+            'role' => $role,
+        ];
+
+        $loginUrl = SITE_URL . '/login';
+        $emailBody = sprintf(
+            '<p>Hi %s,</p>' .
+            '<p>An account has been automatically created for you at Zee Tech Foundation so you can track your request status from your dashboard.</p>' .
+            '<p><strong>Your Account Login Credentials:</strong></p>' .
+            '<ul>' .
+            '<li><strong>Email:</strong> %s</li>' .
+            '<li><strong>Temporary Password:</strong> <code>%s</code></li>' .
+            '</ul>' .
+            '<p>You can <a href="%s">Sign in here</a> anytime to access your dashboard. We recommend changing your password after signing in.</p>' .
+            '<p>Best regards,<br>Zee Tech Foundation</p>',
+            esc($fullName),
+            esc($email),
+            esc($tempPassword),
+            esc($loginUrl)
+        );
+
+        send_email([
+            'to' => $email,
+            'to_name' => $fullName,
+            'subject' => 'Your Zee Tech Foundation Account Credentials',
+            'body' => $emailBody,
+            'alt_body' => "Hi $fullName,\n\nAn account has been automatically created for you at Zee Tech Foundation.\n\nLogin Credentials:\nEmail: $email\nTemporary Password: $tempPassword\n\nLogin at: $loginUrl\n\nBest regards,\nZee Tech Foundation",
+        ]);
+
+        login_user($newUser);
+
+        return ['user' => $newUser, 'created' => true, 'temp_password' => $tempPassword];
+    } catch (Throwable $e) {
+        error_log('provision_user_account_if_needed error: ' . $e->getMessage());
+        return ['user' => null, 'created' => false, 'temp_password' => null];
+    }
+}
+
+function update_donation_status(int $id, string $status): bool
+{
+    if (!in_array($status, ['approved', 'rejected', 'pending'], true)) {
+        return false;
+    }
+
+    try {
+        $db = db_connect();
+
+        try {
+            $db->exec("ALTER TABLE donations ADD COLUMN status ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending'");
+        } catch (Throwable $ignored) {
+        }
+
+        $stmt = $db->prepare('UPDATE donations SET status = :status WHERE id = :id LIMIT 1');
+        $updated = $stmt->execute([':status' => $status, ':id' => $id]);
+
+        if ($updated) {
+            $donation = get_donation_by_id($id);
+            if ($donation) {
+                $email = $donation['email'];
+                $fullName = $donation['full_name'];
+                $deviceType = $donation['device_type'];
+
+                if ($status === 'approved') {
+                    $subject = 'Your Device Donation Has Been Approved - Zee Tech Foundation';
+                    $body = sprintf(
+                        '<p>Hi %s,</p>' .
+                        '<p>Great news! Your device donation request for <strong>%s</strong> has been <strong>APPROVED</strong> by Zee Tech Foundation.</p>' .
+                        '<p>Our team will reach out to you shortly via phone or email to coordinate how to collect the device based on your preference (<em>%s</em>).</p>' .
+                        '<p>Thank you for contributing to digital inclusion!</p>' .
+                        '<p>Best regards,<br>Zee Tech Foundation Team</p>',
+                        esc($fullName),
+                        esc($deviceType),
+                        esc($donation['handover_preference'] ?? 'Handover')
+                    );
+                    $altBody = "Hi $fullName,\n\nGreat news! Your device donation request for $deviceType has been APPROVED by Zee Tech Foundation.\n\nOur team will reach out to you shortly to coordinate how to collect the device.\n\nThank you for contributing!\n\nBest regards,\nZee Tech Foundation Team";
+
+                    send_email([
+                        'to' => $email,
+                        'to_name' => $fullName,
+                        'subject' => $subject,
+                        'body' => $body,
+                        'alt_body' => $altBody,
+                    ]);
+                } elseif ($status === 'rejected') {
+                    $subject = 'Update Regarding Your Device Donation - Zee Tech Foundation';
+                    $body = sprintf(
+                        '<p>Hi %s,</p>' .
+                        '<p>Thank you for offering to donate your <strong>%s</strong> to Zee Tech Foundation.</p>' .
+                        '<p>After reviewing your submission, we regret to inform you that we cannot collect this device from you at this time.</p>' .
+                        '<p>We truly appreciate your willingness to support our cause.</p>' .
+                        '<p>Best regards,<br>Zee Tech Foundation Team</p>',
+                        esc($fullName),
+                        esc($deviceType)
+                    );
+                    $altBody = "Hi $fullName,\n\nThank you for offering to donate your $deviceType to Zee Tech Foundation.\n\nAfter reviewing your submission, we regret to inform you that we cannot collect this device from you at this time.\n\nWe truly appreciate your willingness to support our cause.\n\nBest regards,\nZee Tech Foundation Team";
+
+                    send_email([
+                        'to' => $email,
+                        'to_name' => $fullName,
+                        'subject' => $subject,
+                        'body' => $body,
+                        'alt_body' => $altBody,
+                    ]);
+                }
+            }
+        }
+
+        return $updated;
+    } catch (Throwable $e) {
+        error_log('update_donation_status error: ' . $e->getMessage());
+        return false;
+    }
+}
+
 start_secure_session();
 send_security_headers();
+

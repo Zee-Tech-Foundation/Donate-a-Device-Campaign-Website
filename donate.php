@@ -45,6 +45,9 @@ if (is_post()) {
     if ($quantity < 1) {
         $errors[] = 'Please select at least one device.';
     }
+    if ($conditionNotes === '') {
+        $errors[] = 'Please provide details about the condition of the device.';
+    }
     if ($handoverPreference === '') {
         $errors[] = 'Please choose a handover preference.';
     }
@@ -55,8 +58,12 @@ if (is_post()) {
         $errors[] = 'Captcha answer is incorrect. Please try again.';
     }
 
+    $accountCreatedInfo = null;
+
     if (empty($errors)) {
         try {
+            $accountCreatedInfo = provision_user_account_if_needed($email, $fullName, 'donor');
+
             $db = db_connect();
             $stmt = $db->prepare('INSERT INTO donations (full_name, email, phone, city, device_type, quantity, condition_notes, handover_preference, terms_agreed, created_at) VALUES (:full_name, :email, :phone, :city, :device_type, :quantity, :condition_notes, :handover_preference, :terms_agreed, NOW())');
             $stmt->execute([
@@ -130,8 +137,17 @@ require_once __DIR__ . '/templates/header.php';
             <div class="card" style="border-color: #1a7a4b; background: #f0fbf5; color: #0f3f1e;">
               <h3>Donation submitted</h3>
               <p>Thank you. We will contact you soon to arrange handover.</p>
+              <?php if (!empty($accountCreatedInfo['created'])): ?>
+                <p style="margin-top: 0.75rem; font-size: 0.95rem; background: #e6f4ea; padding: 0.75rem; border-radius: 6px;">
+                  <strong>Account Created:</strong> An account has been created for you, and a temporary password was sent to <strong><?= esc($email); ?></strong>. You are currently signed in!
+                </p>
+              <?php endif; ?>
+              <div style="margin-top: 1rem;">
+                <a class="btn btn-primary" href="donor-dashboard">Go to your Dashboard</a>
+              </div>
             </div>
           <?php else: ?>
+
             <?php if (!empty($errors)): ?>
               <div class="card" style="border-color: #c0392b; background: #fff2f2; color: #6b1d1d;">
                 <h3>Please correct the errors below</h3>

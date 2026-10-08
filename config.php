@@ -13,6 +13,10 @@ define('SITE_URL', getenv('SITE_URL') ?: 'http://localhost/donate-a-device-campa
 define('SITE_EMAIL', 'info@zeetechfoundation.org');
 define('SITE_PHONE', '+234 810 326 9627');
 
+define('GOOGLE_CLIENT_ID', getenv('GOOGLE_CLIENT_ID') ?: '');
+define('GOOGLE_CLIENT_SECRET', getenv('GOOGLE_CLIENT_SECRET') ?: '');
+define('GOOGLE_REDIRECT_URI', getenv('GOOGLE_REDIRECT_URI') ?: SITE_URL . '/google-auth');
+
 define('NAV_ITEMS', [
     ['href' => './', 'label' => 'Home'],
     ['href' => 'about', 'label' => 'About Us'],
