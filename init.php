@@ -8,14 +8,24 @@ function start_secure_session(): void
 {
     if (session_status() !== PHP_SESSION_ACTIVE) {
         $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
-        session_set_cookie_params([
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        $domain = '';
+        if ($host !== '' && !str_contains($host, 'localhost') && !str_contains($host, '127.0.0.1')) {
+            $domain = explode(':', $host)[0];
+        }
+
+        $cookieParams = [
             'lifetime' => 0,
             'path' => '/',
-            'domain' => $_SERVER['HTTP_HOST'] ?? '',
             'secure' => $secure,
             'httponly' => true,
-            'samesite' => 'Strict',
-        ]);
+            'samesite' => 'Lax',
+        ];
+        if (!empty($domain)) {
+            $cookieParams['domain'] = $domain;
+        }
+
+        session_set_cookie_params($cookieParams);
         session_start();
     }
 }
